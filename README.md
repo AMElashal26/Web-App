@@ -1,0 +1,1 @@
+Building stack upon stack for the purpose of learning and utility. Want to be able to store data and access it using a webapp
