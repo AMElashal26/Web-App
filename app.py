@@ -24,3 +24,11 @@ def add_task():
     task_id = tasks.insert_one({'task': task, 'category': task_category}).inserted_id
     new_task = tasks.find_one({'_id': task_id})
     return jsonify(task=new_task['task'], category=new_task['category']), 201
+
+@app.route('/tasks', methods=['GET'])
+def get_tasks():
+    tasks = mongo.db.tasks
+    result = []
+    for task in tasks.find():
+        result.append({'task': task['task'], 'category': task['category']})
+    return jsonify(result)
