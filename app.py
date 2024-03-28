@@ -15,3 +15,12 @@ def hello_world():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/tasks', methods=['POST'])
+def add_task():
+    tasks = mongo.db.tasks
+    task = request.json['task']
+    task_category = "General"  # Placeholder for category, until ML model is integrated
+    task_id = tasks.insert_one({'task': task, 'category': task_category}).inserted_id
+    new_task = tasks.find_one({'_id': task_id})
+    return jsonify(task=new_task['task'], category=new_task['category']), 201
